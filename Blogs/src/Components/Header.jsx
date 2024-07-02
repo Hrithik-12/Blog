@@ -2,9 +2,13 @@ import {Avatar, Button, Dropdown, Navbar, TextInput} from 'flowbite-react'
 import { Link,useLocation } from 'react-router-dom'
 import { FiSearch } from "react-icons/fi";
 import { MdOutlineDarkMode } from "react-icons/md";
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { toggleTheme } from '../theme/darkmodeslice';
+import { GoSun } from "react-icons/go";
 function Header() {
   const path=useLocation().pathname;
+  const dispatch=useDispatch();
+  const {theme}=useSelector(state=>state.theme)
   const {currentUser}=useSelector((state)=>state.user)
   return (
     <Navbar className='border-b-2' >
@@ -26,8 +30,8 @@ function Header() {
       </Navbar.Collapse>
       {/* // for dark theme toggle feature */}
       <div className='flex gap-2'>
-        <Button className='w-12 h-10 hidden sm:inline ' color='gray' pill >
-          <MdOutlineDarkMode/>
+        <Button className='w-12 h-10 hidden sm:inline ' color='gray' pill onClick={()=>dispatch(toggleTheme())}  >
+         {theme==='light' ?  <MdOutlineDarkMode/>:<GoSun/>}
         </Button>
         {
           currentUser ?(<Dropdown arrowIcon={false} inline label={<Avatar alt='user' img={currentUser.image} rounded />} >

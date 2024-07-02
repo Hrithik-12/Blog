@@ -3,9 +3,11 @@ import userReducer from './UserSlice'
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import persistStore from 'redux-persist/es/persistStore';
+import themeReducer from '../theme/darkmodeslice.js';
 
 const rootReducer=combineReducers({
-  user:userReducer
+  user:userReducer,
+  theme:themeReducer
 });
 
 const persistConfig={
