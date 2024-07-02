@@ -4,10 +4,10 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// "AIzaSyBTrbTLa00hv1ScbFEzZN4HVhTn5GX8GTQ"
+
 
 const firebaseConfig = {
-  apiKey:"AIzaSyBTrbTLa00hv1ScbFEzZN4HVhTn5GX8GTQ",
+  apiKey:import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "blogss-1c983.firebaseapp.com",
   projectId: "blogss-1c983",
   storageBucket: "blogss-1c983.appspot.com",
