@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "../Redux/UserSlice";
+import OAuth from "../Components/OAuth";
 // redux persist use for to store the data after refreshing
 
 function Signin() {
@@ -81,6 +82,7 @@ function Signin() {
             <TextInput type="password" id="password" placeholder="Enter Password" onChange={handlechange} />
           </div>
           <Button gradientDuoTone="cyanToBlue" type="submit" disabled={loading} >{loading ? (<Spinner aria-label="Large spinner example" size="lg"/>):"Sign in"}</Button>
+          <OAuth/>
 
         </form>
         <div>

@@ -4,6 +4,7 @@ import {Alert, Button, Label, TextInput} from 'flowbite-react'
 import {TypeAnimation} from 'react-type-animation'
 import { useState } from 'react'
 import { Spinner } from 'flowbite-react'
+import OAuth from '../Components/OAuth'
 
 function Signup() {
   const[formdata,setformdata]=useState({});
@@ -87,6 +88,7 @@ function Signup() {
       <TextInput placeholder='Create Password' id='password' type='password' onChange={handlechange}   />
     </div>
     <Button disabled={loading}  gradientDuoTone="cyanToBlue" type='submit'  >{loading ? (<Spinner aria-label="Large spinner example" size="lg" />):"Sign Up" }</Button>
+    <OAuth/>
   </form>
   <div className='flex gap-2 items-center '>
     <span className='text-sm  font-semibold'>Have An Account?</span>
