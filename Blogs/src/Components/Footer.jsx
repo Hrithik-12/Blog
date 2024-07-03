@@ -19,15 +19,15 @@ function Footers() {
         <div>
           <Footer.Title title="About" />
         <Footer.LinkGroup>
-          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" ><Link>Contact</Link></Footer.Link>
+          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" as={'div'} ><Link>Contact</Link></Footer.Link>
         </Footer.LinkGroup>
       
         <Footer.LinkGroup>
-          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" ><Link>Reach us</Link></Footer.Link>
+          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" as={'div'}><Link>Reach us</Link></Footer.Link>
         </Footer.LinkGroup>
       
         <Footer.LinkGroup>
-          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" ><Link>Policy</Link></Footer.Link>
+          <Footer.Link href="#" target="_blank" rel="noopener noreferrer" as={'div'} ><Link>Policy</Link></Footer.Link>
         </Footer.LinkGroup>
         
         

@@ -14,7 +14,7 @@ const google=async (req,res,next)=>{
       const {password,...rest}=userexsist._doc;
       res.status(200).cookie('access_token',token,{
         httpOnly:true
-      }).json(userexsist)
+      }).json(rest)
     }
     else{
       const genertaerandompass=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
