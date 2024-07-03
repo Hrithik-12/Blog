@@ -30,7 +30,7 @@ function Header() {
       </Navbar.Collapse>
       {/* // for dark theme toggle feature */}
       <div className='flex gap-2'>
-        <Button className='w-12 h-10 hidden sm:inline ' color='gray' pill onClick={()=>dispatch(toggleTheme())}  >
+        <Button className='w-12 h-10 hidden sm:inline outline-none ' color='gray' pill onClick={()=>dispatch(toggleTheme())}  >
          {theme==='light' ?  <MdOutlineDarkMode/>:<GoSun/>}
         </Button>
         {
