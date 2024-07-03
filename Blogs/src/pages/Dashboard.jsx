@@ -19,12 +19,12 @@ function Dashboard() {
         {/* // sidebar */} 
         <DashboardSidebar/>
       </div>
-      <div>
+      
       {
         tab==='profile' && <DashboardProfile/>
       }
 
-      </div>
+    
     </div>
   )
 }
