@@ -5,6 +5,7 @@ const cors=require('cors')
 const UserRoutiing=require('./routes/UserRoute.js')
 const CookieParser=require('cookie-parser');
 const cookieParser = require('cookie-parser');
+const routestopost=require('./routes/postroutes.js')
 
 const app=express();
 app.use(express.json());
@@ -17,6 +18,7 @@ mongoose.connect('mongodb+srv://Hrithik:RKGxyZnh7dBmI66w@cluster0.vxm6kgs.mongod
 app.use(cors())
 app.use('/auth/user',routing);
 app.use('/auth/useraction',UserRoutiing);
+app.use('/auth/adminaction',routestopost);
 
 // middleware to handle the error
 
