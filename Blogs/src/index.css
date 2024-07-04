@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+  height:100vh;
+}
+
+/* ql-editor from inspecting the page and get the class from thw browser */
+
+.ql-editor{
+  font-size:1.05rem
+}

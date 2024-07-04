@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux' 
-import {Alert, Button, TextInput} from 'flowbite-react'
+import {Alert, Button, Spinner, TextInput} from 'flowbite-react'
 import { useEffect,useState,useRef } from 'react';
 import {ref,getStorage, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
 import {app} from '../firebase'
@@ -8,6 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { deleteUserstart, deleteUserSuccess, deletUserFailure, signOutFailure, signOutStart, signOutSuccess, updateFailure, updateStart, updateSuccess } from '../Redux/UserSlice';
 import { Modal } from 'flowbite-react';
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import {Link} from 'react-router-dom'
 
 
 
@@ -16,7 +17,7 @@ function DashboardProfile() {
   // show modal
   const[modal,setModal]=useState(false);
   // show modal
-  const {currentUser,error}=useSelector(state=>state.user);
+  const {currentUser,error,loading}=useSelector(state=>state.user);
   const[imguplodinggg,setimguploadinggg]=useState(false);
   const[isUpdated,setIsUpdated]=useState(null);
   const[isupdatederror,setIsupdatederror]=useState(null);
@@ -202,7 +203,16 @@ const handlesignout=async()=>{
       <TextInput type='text' id='name' defaultValue={currentUser.name} onChange={handlechange}   />
       <TextInput type='email' id='email' defaultValue={currentUser.email} onChange={handlechange}  />
       <TextInput type='text' id='password' placeholder='Password To Update' onChange={handlechange} />
-      <Button type='submit' gradientDuoTone='purpleToBlue'  outline>Update Profile</Button>
+      <Button type='submit' gradientDuoTone='purpleToBlue' disabled={loading || imguplodinggg}   outline>{loading ? <Spinner aria-label="Large spinner example" size="lg"/>:"Update Profile" }</Button>
+      {
+        currentUser.isAdmin  && (
+          // after this we had to make a create post page for this in pages
+          <Link to={'/create-post'} ><Button type='button' className='w-full' gradientDuoTone='purpleToBlue' >
+          Create Post
+          
+        </Button></Link>
+        )
+      }
       </form>
       <div className='flex justify-between items-center mt-2 '>
         <span className='text-sm font-semibold text-red-600 font-serif  cursor-pointer' onClick={()=>setModal(true)}  >Delete Account</span>

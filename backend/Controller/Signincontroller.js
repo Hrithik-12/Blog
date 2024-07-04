@@ -24,7 +24,7 @@ const Signin=async (req,res,next)=>{
    return next(errorhandler(401,"Wrong Credentials"));
   }
    
-  const token=jwt.sign({id:verifiedemail._id},'secret');
+  const token=jwt.sign({id:verifiedemail._id,isAdmin:verifiedemail.isAdmin},'secret');
   console.log(token);
   const {password:pass,...rest}=verifiedemail._doc;
   res.status(200).cookie('access_token',token,{

@@ -26,7 +26,7 @@ const google=async (req,res,next)=>{
         image
       });
       await NewSignupuser.save();
-      const token=jwt.sign({id:NewSignupuser._id},'secret');
+      const token=jwt.sign({id:NewSignupuser._id,isAdmin:NewSignupuser.isAdmin},'secret');
       const{password:hash,...rest}=NewSignupuser._doc
       res.status(200).cookie('access_token',token,{
         httpOnly:true
