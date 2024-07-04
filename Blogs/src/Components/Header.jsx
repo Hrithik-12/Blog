@@ -1,15 +1,40 @@
-import {Avatar, Button, Dropdown, Navbar, TextInput} from 'flowbite-react'
+import {Avatar, Button, Dropdown, Modal, Navbar, TextInput} from 'flowbite-react'
 import { Link,useLocation } from 'react-router-dom'
 import { FiSearch } from "react-icons/fi";
 import { MdOutlineDarkMode } from "react-icons/md";
 import {useDispatch, useSelector} from 'react-redux'
 import { toggleTheme } from '../theme/darkmodeslice';
 import { GoSun } from "react-icons/go";
+import { signOutSuccess,signOutStart, signOutFailure } from '../Redux/UserSlice';
+import { useState } from 'react';
+import { IoMdInformationCircleOutline } from "react-icons/io";
 function Header() {
   const path=useLocation().pathname;
   const dispatch=useDispatch();
   const {theme}=useSelector(state=>state.theme)
-  const {currentUser}=useSelector((state)=>state.user)
+  const {currentUser}=useSelector((state)=>state.user);
+  const[isSignOutModal,setIsSignOutModal]=useState(false)
+
+
+
+  const handlesignout=async()=>{
+    try{
+      dispatch(signOutStart())
+      const res=await fetch('/auth/useraction/signout',{
+        method:"POST"
+      });
+      const data=await res.json();
+      if(data.success===false){
+        dispatch(signOutFailure(data.message))
+      }else{
+        dispatch(signOutSuccess(data))
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
   return (
     <Navbar className='border-b-2' >
       <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white ' >
@@ -41,12 +66,28 @@ function Header() {
             <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider/>
-            <Dropdown.Item>Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={()=>setIsSignOutModal(true)} >Sign Out</Dropdown.Item>
           </Dropdown>) :(<Link to='/signin' ><Button gradientDuoTone='purpleToBlue' outline >Get Started</Button></Link>)
         }
 
         
         <Navbar.Toggle/>
+        <Modal show={isSignOutModal} size="md" onClose={() => setIsSignOutModal(false)} popup>
+        <Modal.Header/>
+        <Modal.Body>
+              <div className='text-center'>
+                <IoMdInformationCircleOutline className='w-14 h-14 text-cyan-500 dark:text-cyan-200 mb-4 mx-auto '/>
+                <h2 className='mb-5 text-lg font-serif  text-cyan-700 dark:text-cyan-300 '>Are You Sure You Want To Sign Out from your Account !!</h2>
+                <div className='flex  justify-between items-center'>
+                  <Button color='failure' onClick={handlesignout} >yes,I am sure</Button>
+                  <Button  onClick={()=>setIsSignOutModal(false)} color='blue' > Cancel</Button>
+                </div>
+
+                
+
+              </div>
+          </Modal.Body>
+       </Modal>
       </div>
 
       
