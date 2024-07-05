@@ -14,11 +14,11 @@ const PostSchema=mongoose.Schema({
     required:true,
     unique:true
   },
-  imagePost:{
+  image:{
     type:String,
     default:"https://img.freepik.com/free-photo/business-women-signature-document_1388-90.jpg?t=st=1720081782~exp=1720085382~hmac=be5d98984d62dee914b2ea80892787ba327facc2dc8e2c0929738721b6d4ee0d&w=1060"
   },
-  categoty:{
+  category:{
     type:String,
     default:"uncategorized"
   },

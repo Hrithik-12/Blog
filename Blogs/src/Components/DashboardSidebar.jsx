@@ -2,14 +2,16 @@ import {Sidebar} from 'flowbite-react'
 import { useEffect, useState } from 'react';
 import { CiUser } from "react-icons/ci";
 import { FaArrowRight } from "react-icons/fa"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { signOutFailure, signOutSuccess,signOutStart } from '../Redux/UserSlice';
+import { MdOutlinePostAdd } from "react-icons/md";
 
 function DashboardSidebar() {
   const location=useLocation();
   const [tabs,setTab]=useState('');
-  const dispatch=useDispatch()
+  const dispatch=useDispatch();
+  const {currentUser} =useSelector((state=>state.user))
 
   useEffect(()=>{
     const urlparams=new URLSearchParams(location.search);
@@ -37,9 +39,14 @@ function DashboardSidebar() {
   return (
     <Sidebar className='w-full md:56 '>
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Link to={'/dashboard?tab=profile'}  ><Sidebar.Item as={'div'} icon={CiUser} active={tabs==='profile'}  label={'user'} labelColor='dark' >Profile</Sidebar.Item></Link>
+        <Sidebar.ItemGroup className='flex gap-2 flex-col' >
+          <Link to={'/dashboard?tab=profile'}  ><Sidebar.Item as={'div'} icon={CiUser} active={tabs==='profile'}  label={ currentUser.isAdmin ? "Admin":"user" } labelColor='dark' >Profile</Sidebar.Item></Link>
           <Sidebar.Item  icon={FaArrowRight}  className='cursor-pointer' onClick={handlesignout} >Sign Out</Sidebar.Item>
+          {
+            currentUser.isAdmin && <Link to={'/dashboard?tab=post'} >
+            <Sidebar.Item as={'div'}  icon={MdOutlinePostAdd}  className='cursor-pointer' active={tabs==='post'}  >Posts</Sidebar.Item>
+            </Link>
+          }
         </Sidebar.ItemGroup>
       </Sidebar.Items>
 
