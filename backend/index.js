@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://Hrithik:RKGxyZnh7dBmI66w@cluster0.vxm6kgs.mongod
 app.use(cors())
 app.use('/auth/user',routing);
 app.use('/auth/useraction',UserRoutiing);
-app.use('/auth/adminaction',routestopost);
+app.use('/auth/posts',routestopost);
 
 // middleware to handle the error
 
