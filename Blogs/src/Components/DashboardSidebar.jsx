@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { signOutFailure, signOutSuccess,signOutStart } from '../Redux/UserSlice';
 import { MdOutlinePostAdd } from "react-icons/md";
+import { HiOutlineUsers } from "react-icons/hi2";
 
 function DashboardSidebar() {
   const location=useLocation();
@@ -47,6 +48,12 @@ function DashboardSidebar() {
             <Sidebar.Item as={'div'}  icon={MdOutlinePostAdd}  className='cursor-pointer' active={tabs==='post'}  >Posts</Sidebar.Item>
             </Link>
           }
+           {
+            currentUser.isAdmin && <Link to={'/dashboard?tab=users'} >
+            <Sidebar.Item as={'div'}  icon={HiOutlineUsers}  className='cursor-pointer' active={tabs==='users'}  >Users</Sidebar.Item>
+            </Link>
+          }
+
         </Sidebar.ItemGroup>
       </Sidebar.Items>
 

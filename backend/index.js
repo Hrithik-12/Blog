@@ -3,7 +3,7 @@ const mongoose=require('mongoose');
 const routing=require('./routes/Authroutes.js');
 const cors=require('cors')
 const UserRoutiing=require('./routes/UserRoute.js')
-const CookieParser=require('cookie-parser');
+
 const cookieParser = require('cookie-parser');
 const routestopost=require('./routes/postroutes.js')
 
