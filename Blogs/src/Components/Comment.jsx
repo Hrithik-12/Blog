@@ -1,11 +1,14 @@
 
 import { Button, Textarea} from 'flowbite-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
+import Commentscom from './Commentscom'
 function Comment({postId}) {
   const {currentUser}=useSelector(state=>state.user)
-  const[comment,setComment]=useState('')
+  const[comment,setComment]=useState('');
+  const [commentfromdb,setCommentfromdb]=useState([]);
+  
   const handlesubmit=async (e)=>{
     // lets make api route for this
     e.preventDefault()
@@ -21,13 +24,37 @@ function Comment({postId}) {
       const data=await res.json();
       if(res.ok){
         setComment('');
+        console.log(data);
+        // this will allow delaying
+        setCommentfromdb([data,...commentfromdb]);
       }
-      console.log(data)
+      
 
     }catch(error){
       console.log(error)
     }
   }
+
+  useEffect(()=>{
+
+    const getallcomment=async ()=>{
+      try{
+        const res=await fetch(`/auth/comment/allcomments/${postId}`);
+        const data=await res.json();
+        if(res.ok){
+          setCommentfromdb(data)
+        }
+
+      }catch(error){
+        console.log(error)
+      }
+
+    }
+
+    getallcomment()
+
+
+  },[postId])
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>{
 
@@ -62,6 +89,21 @@ function Comment({postId}) {
               <Button outline gradientDuoTone={'purpleToBlue'} type='submit' >Sumbit</Button>
             </div>
           </form>
+        )
+      }
+      {
+        commentfromdb.length ===0 ? ("no comment yet"):(
+          <>
+          <div>           
+             <p className='text-sm uppercase '>comments : {commentfromdb.length}</p>            
+          </div>
+         {
+           commentfromdb.map(comm =>(
+            <Commentscom key={comm._id} comm={comm} />
+           ))
+         }
+          
+          </>
         )
       }
       
