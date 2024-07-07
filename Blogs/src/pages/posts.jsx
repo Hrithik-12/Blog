@@ -1,6 +1,8 @@
 import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
+import CalltoAction from "../Components/CalltoAction";
+// adding call to action post from components
 
 function Posts() {
   const {postId} =useParams();
@@ -55,6 +57,9 @@ function Posts() {
       <div className="p-3 max-w-2xl mx-auto w-full post-content" dangerouslySetInnerHTML={{__html:post && post.content}} >
         {/* // let design this body as we have html tags so now we are required to use pure classes and edit them in index.js */}
 
+      </div>
+      <div className="max-w-4xl mx-auto w-full ">
+        <CalltoAction/>
       </div>
     </main>
   )
