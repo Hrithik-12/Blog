@@ -65,7 +65,7 @@ export default function CreatePost() {
   const handlesubmit=async (e)=>{
     e.preventDefault();
     try{
-      const res=await fetch('/auth/adminaction/create-post',{
+      const res=await fetch('/auth/posts/create-post',{
         method:"POST",
         headers:{"Content-Type":'application/json'},
         body:JSON.stringify(formData)
