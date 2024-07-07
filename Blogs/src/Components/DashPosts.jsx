@@ -1,7 +1,9 @@
-import { Table } from "flowbite-react";
+import { Table,Button } from "flowbite-react";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
+import { Modal } from 'flowbite-react';
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 
 function DashPosts() {
@@ -10,6 +12,9 @@ function DashPosts() {
   const [userPosts, setUserPosts] = useState([]);
   const [showmorepost,setshowmorepost]=useState(true);
   const[showlesspost,setshowlesspost]=useState(false);
+  const[showmodel,setShoeModel]=useState(false);
+  const[postid,setpostid]=useState('')
+  
 
 
 
@@ -44,7 +49,7 @@ function DashPosts() {
         setUserPosts((prev)=>[...prev,...data.posts]);
         if(data.posts.length < 9){
           setshowmorepost(false);
-          setshowlesspost(true);
+          
         }
       }
 
@@ -70,6 +75,29 @@ function DashPosts() {
       console.log(error);
     }
   }
+
+  const handledeletepost=async ()=>{
+    setShoeModel(false);
+    try{
+     
+      const res=await fetch(`/auth/posts/delete/${postid}/${currentUser._id}`,{
+        method:"DELETE",
+       
+      });
+      const data=await res.json();
+     if(!res.ok){
+      console.log(data.message)
+     }else{
+      setUserPosts((prev)=>prev.filter((post)=>post._id !==postid))
+     }
+    }catch(error){
+      console.log(error);
+    
+    }
+  
+  }
+
+
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-700 ">
@@ -99,7 +127,11 @@ function DashPosts() {
                    <Table.Cell  ><Link to={`/post/${posts.slug}`} >{posts.title}</Link></Table.Cell>
                  <Table.Cell>{posts.category}</Table.Cell>
                  <Table.Cell>
-                  <span className="text-red-500 font-medium hover:underline cursor-pointer ">Delete</span>
+                  <span onClick={()=>{
+                    setShoeModel(true);
+                    setpostid(posts._id);
+
+                  }} className="text-red-500 font-medium hover:underline cursor-pointer ">Delete</span>
                  </Table.Cell>
                  <Table.Cell >
                   <Link to={`/update-post/${posts._id}`} ><span className="text-teal-400" >Edit</span></Link>
@@ -125,6 +157,22 @@ function DashPosts() {
         
         </>):(<p>No Post Yet</p>)
       }
+      <Modal show={showmodel} size="md" onClose={() => setShoeModel(false)} popup>
+        <Modal.Header/>
+        <Modal.Body>
+              <div className='text-center'>
+                <IoMdInformationCircleOutline className='w-14 h-14 text-cyan-500 dark:text-cyan-200 mb-4 mx-auto '/>
+                <h2 className='mb-5 text-lg font-serif  text-cyan-700 dark:text-cyan-300 '>Are You Sure You Want To Delete this post !!</h2>
+                <div className='flex  justify-between items-center'>
+                  <Button color='failure' onClick={handledeletepost} >yes,I am sure</Button>
+                  <Button  color='blue' >No, Cancel</Button>
+                </div>
+
+                
+
+              </div>
+          </Modal.Body>
+       </Modal>
     </div>
   )
 }
