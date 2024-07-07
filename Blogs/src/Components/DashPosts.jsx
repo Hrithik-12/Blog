@@ -30,7 +30,7 @@ function DashPosts() {
   }, [currentUser._id]);
 
   return (
-    <div className="p-2">
+    <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-700 ">
       {
         currentUser.isAdmin && userPosts.length >0 ? (<>
 
@@ -45,8 +45,8 @@ function DashPosts() {
           </Table.Head>
           {
             userPosts.map((posts,ind)=>(
-              <Table.Body key={ind} >
-                <Table.Row>
+              <Table.Body key={ind} className='divide-y-2' >
+                <Table.Row className="bg-white dark:border-gray-800 dark:bg-gray-700" >
                   <Table.Cell>{ new Date(posts.updatedAt).toLocaleDateString() }</Table.Cell>
                   <Table.Cell>
                     <Link to={`/post/${posts.slug}`} >
