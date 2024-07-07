@@ -60,26 +60,26 @@ function DashUser() {
   }
 
 
-  // const handledeletepost=async ()=>{
-  //   setShoeModel(false);
-  //   try{
+  const handledeleteuser=async ()=>{
+    setShoeModel(false);
+    try{
      
-  //     const res=await fetch(`/auth/posts/delete/${postid}/${currentUser._id}`,{
-  //       method:"DELETE",
+      const res=await fetch(`/auth/useraction/delete/${usersid}`,{
+        method:"DELETE",
        
-  //     });
-  //     const data=await res.json();
-  //    if(!res.ok){
-  //     console.log(data.message)
-  //    }else{
-  //     setUserPosts((prev)=>prev.filter((post)=>post._id !==postid))
-  //    }
-  //   }catch(error){
-  //     console.log(error);
+      });
+      const data=await res.json();
+     if(!res.ok){
+      console.log(data.message)
+     }else{
+      setUser((prev)=>prev.filter((user)=>user._id !==usersid))
+     }
+    }catch(error){
+      console.log(error);
     
-  //   }
+    }
   
-  // }
+  }
 
 
 
@@ -112,6 +112,7 @@ function DashUser() {
                  <Table.Cell>
                   <span onClick={()=>{
                     setShoeModel(true);
+                    setusersid(cuser._id)
                     
 
                   }} className="text-red-500 font-medium hover:underline cursor-pointer ">Delete</span>
@@ -145,8 +146,8 @@ function DashUser() {
                 <IoMdInformationCircleOutline className='w-14 h-14 text-cyan-500 dark:text-cyan-200 mb-4 mx-auto '/>
                 <h2 className='mb-5 text-lg font-serif  text-cyan-700 dark:text-cyan-300 '>Are You Sure You Want To Delete this user !!</h2>
                 <div className='flex  justify-between items-center'>
-                  <Button color='failure'  >yes,I am sure</Button>
-                  <Button  color='blue' >No, Cancel</Button>
+                  <Button color='failure' onClick={handledeleteuser} >yes,I am sure</Button>
+                  <Button onClick={()=>setShoeModel(false)} color='blue' >No, Cancel</Button>
                 </div>
 
                 

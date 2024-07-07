@@ -4,7 +4,7 @@ const errorhandler = require("../utils/errorhandeler")
 const Deletelogic=async(req,res,next)=>{
 
 
-  if(req.user.id!==req.params.id){
+  if( !req.user.isAdmin && req.user.id!==req.params.id){
     return next(errorhandler(401,'You are not allowed to delete the account'));
   }
 
