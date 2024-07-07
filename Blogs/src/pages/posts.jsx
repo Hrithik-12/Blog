@@ -2,6 +2,7 @@ import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import CalltoAction from "../Components/CalltoAction";
+import Comment from "../Components/Comment";
 // adding call to action post from components
 
 function Posts() {
@@ -61,6 +62,7 @@ function Posts() {
       <div className="max-w-4xl mx-auto w-full ">
         <CalltoAction/>
       </div>
+      <Comment postId={postId} />
     </main>
   )
 }

@@ -6,6 +6,7 @@ const UserRoutiing=require('./routes/UserRoute.js')
 
 const cookieParser = require('cookie-parser');
 const routestopost=require('./routes/postroutes.js')
+const commentroute =require('./routes/Commentroute.js')
 
 const app=express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(cors())
 app.use('/auth/user',routing);
 app.use('/auth/useraction',UserRoutiing);
 app.use('/auth/posts',routestopost);
+app.use('/auth/comment',commentroute)
 
 // middleware to handle the error
 
