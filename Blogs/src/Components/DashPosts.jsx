@@ -124,7 +124,7 @@ function DashPosts() {
                     </Link>
 
                   </Table.Cell>
-                   <Table.Cell  ><Link to={`/post/${posts.slug}`} >{posts.title}</Link></Table.Cell>
+                   <Table.Cell  ><Link to={`/post/${posts._id}`} >{posts.title}</Link></Table.Cell>
                  <Table.Cell>{posts.category}</Table.Cell>
                  <Table.Cell>
                   <span onClick={()=>{

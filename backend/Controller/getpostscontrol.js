@@ -10,8 +10,8 @@ const getpost=async (req,res,next)=>{
     const posts=await PostModal.find({
       // 
       ...(req.query.userId && {userId:req.query.userId}),
-      ...(req.query.category && {userId:req.query.category}),
-      ...(req.query.slug && {userId:req.query.slug}),
+      ...(req.query.category && {category:req.query.category}),
+      ...(req.query.slug && {slug:req.query.slug}),
       ...(req.query.postId && {_id:req.query.postId}),
       ...(req.query.searchTerm && {
           $or:[
