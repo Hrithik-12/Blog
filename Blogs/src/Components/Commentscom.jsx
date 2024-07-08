@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react"
 import moment from 'moment'
+import { PiThumbsUpBold } from "react-icons/pi";
+import { useSelector } from "react-redux";
 
 
-function Commentscom({comm}) {
-  const [user,setUser]=useState({})
+function Commentscom({comm,onLike}) {
+  const [user,setUser]=useState({});
+  const {currentUser} =useSelector(state=>state.user)
+
+
   useEffect(()=>{
     const getuser=async ()=>{
       try{
@@ -22,7 +27,7 @@ function Commentscom({comm}) {
 
     }
     getuser();
-  })
+  },[])
   return (
     <div className="flex flex-col p-4 border-b-2 border-teal-400 gap-2">
       <div className="flex shrink-0 mr-3">
@@ -35,6 +40,16 @@ function Commentscom({comm}) {
       <p className="text-md text-gray-400">
         {comm.content}
       </p>
+      <div className="flex items-center pt-2 text-xs border-t-2 dark:border-gray-700 max-w-fit gap-2 ">
+        <button type="button" onClick={()=>onLike(comm._id)} className={`text-gray-400 hover:text-teal-500 ${currentUser && comm.likes.includes(currentUser._id)  && 'text-blue-500' }  `}>
+          <PiThumbsUpBold className="text-sm  " />
+        </button>
+        <p className="text-gray-400">
+          {
+            comm.numberoflikes >0 && comm.numberoflikes + ' ' + (comm.numberoflikes===1 ? 'like':'likes' )
+          }
+        </p>
+      </div>
      
 
 

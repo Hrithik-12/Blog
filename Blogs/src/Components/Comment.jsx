@@ -2,12 +2,13 @@
 import { Button, Textarea} from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Commentscom from './Commentscom'
 function Comment({postId}) {
   const {currentUser}=useSelector(state=>state.user)
   const[comment,setComment]=useState('');
   const [commentfromdb,setCommentfromdb]=useState([]);
+  const navigate=useNavigate()
   
   const handlesubmit=async (e)=>{
     // lets make api route for this
@@ -54,7 +55,45 @@ function Comment({postId}) {
     getallcomment()
 
 
-  },[postId])
+  },[postId]);
+
+  const handlelikes=async (commentId)=>{
+    if(!currentUser){
+      navigate('/signin');
+      return
+    }
+
+    try{
+
+      const res=await fetch(`/auth/comment/like/${commentId}`,{
+        method:"PUT"
+      }
+        
+      );
+
+      const data=await res.json();
+      if(res.ok){
+        setCommentfromdb(commentfromdb.map((co)=>
+          co._id === commentId ? {
+            ...co,
+            likes:data.likes,
+            numberoflikes:data.likes.length
+          }:co
+
+        ))
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+
+
+
+  }
+
+
+
+
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>{
 
@@ -99,7 +138,7 @@ function Comment({postId}) {
           </div>
          {
            commentfromdb.map(comm =>(
-            <Commentscom key={comm._id} comm={comm} />
+            <Commentscom key={comm._id} comm={comm} onLike={handlelikes} />
            ))
          }
           
