@@ -2,17 +2,21 @@ import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import CalltoAction from "../Components/CalltoAction";
-import Comment from "../Components/Comment";
+import CommentSection from "../Components/Commentsection";
+import Postcard from "../Components/Postcard";
+
 // adding call to action post from components
 
 function Posts() {
   const {postId} =useParams();
+ 
   const[loading,setloading]=useState(true);
   const[error,seterror]=useState(false);
-  const[post,setpost]=useState(null)
+  const[post,setpost]=useState(null);
+  const[recentarticles,setRecentarticles]=useState(null)
 
   useEffect(()=>{
-    console.log(postId);
+  
     const fetchpost=async ()=>{
       try{
         setloading(true);
@@ -22,6 +26,7 @@ function Posts() {
         if(!res.ok){
           seterror(true);
           setloading(false);
+          
           return;
 
         }
@@ -44,6 +49,25 @@ function Posts() {
 
   },[postId]);
 
+  useEffect(()=>{
+    try{
+      const fetchrecentarticles=async ()=>{
+        const res=await fetch('/auth/posts/getposts?limit=3')
+        const data=await res.json();
+
+        if(res.ok){
+          setRecentarticles(data.posts);
+        }
+
+      }
+
+      fetchrecentarticles()
+
+    }catch(error){
+      console.log(error)
+    }
+
+  },[])
 
   if(loading) return <div className="flex justify-center items-center min-h-screen "><Spinner size={'2xl'}  color={'blue'}/></div>
   return (
@@ -62,7 +86,20 @@ function Posts() {
       <div className="max-w-4xl mx-auto w-full ">
         <CalltoAction/>
       </div>
-      <Comment postId={postId} />
+      {/* <Comment postId={postId} /> */}
+      <CommentSection postId={postId} />
+      <div className="flex flex-col justify-center items-center mb-5  ">
+        <h1 className="text-xl mt-5">Recent Articles</h1>
+        <div className="flex flex-wrap gap-5 mt-5 ">
+          {
+            recentarticles && recentarticles.map((post)=>(
+              <Postcard  key={post._id} post={post} />
+            ))
+          }
+
+        </div>
+
+      </div>
     </main>
   )
 }

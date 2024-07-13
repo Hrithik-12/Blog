@@ -1,5 +1,5 @@
 import {Avatar, Button, Dropdown, Modal, Navbar, TextInput} from 'flowbite-react'
-import { Link,useLocation } from 'react-router-dom'
+import { Link,useLocation, useNavigate } from 'react-router-dom'
 import { FiSearch } from "react-icons/fi";
 import { MdOutlineDarkMode } from "react-icons/md";
 import {useDispatch, useSelector} from 'react-redux'
@@ -14,6 +14,7 @@ function Header() {
   const {theme}=useSelector(state=>state.theme)
   const {currentUser}=useSelector((state)=>state.user);
   const[isSignOutModal,setIsSignOutModal]=useState(false)
+  const navigate=useNavigate()
 
 
 
@@ -25,9 +26,12 @@ function Header() {
       });
       const data=await res.json();
       if(data.success===false){
-        dispatch(signOutFailure(data.message))
+        dispatch(signOutFailure(data.message));
+        setIsSignOutModal(false)
       }else{
         dispatch(signOutSuccess(data))
+        setIsSignOutModal(false);
+        navigate('/signin')
       }
     }catch(error){
       console.log(error)
