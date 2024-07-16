@@ -8,6 +8,7 @@ import { signOutFailure, signOutSuccess,signOutStart } from '../Redux/UserSlice'
 import { MdOutlinePostAdd } from "react-icons/md";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { MdOutlineInsertComment } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 
 function DashboardSidebar() {
   const location=useLocation();
@@ -43,7 +44,12 @@ function DashboardSidebar() {
       <Sidebar.Items>
         <Sidebar.ItemGroup className='flex gap-2 flex-col' >
           <Link to={'/dashboard?tab=profile'}  ><Sidebar.Item as={'div'} icon={CiUser} active={tabs==='profile'}  label={ currentUser.isAdmin ? "Admin":"user" } labelColor='dark' >Profile</Sidebar.Item></Link>
-          <Sidebar.Item  icon={FaArrowRight}  className='cursor-pointer' onClick={handlesignout} >Sign Out</Sidebar.Item>
+          
+          {
+            currentUser.isAdmin && <Link to={'/dashboard?tab=dashboard'} >
+            <Sidebar.Item as={'div'}  icon={MdDashboard}  className='cursor-pointer' active={tabs==='dashboard'}  >Dashboard</Sidebar.Item>
+            </Link>
+          }
           {
             currentUser.isAdmin && <Link to={'/dashboard?tab=post'} >
             <Sidebar.Item as={'div'}  icon={MdOutlinePostAdd}  className='cursor-pointer' active={tabs==='post'}  >Posts</Sidebar.Item>
@@ -59,6 +65,9 @@ function DashboardSidebar() {
             <Sidebar.Item as={'div'}  icon={MdOutlineInsertComment}  className='cursor-pointer' active={tabs==='comments'}  >Comments</Sidebar.Item>
             </Link>
           }
+
+<Sidebar.Item  icon={FaArrowRight}  className='cursor-pointer' onClick={handlesignout} >Sign Out</Sidebar.Item>
+           
 
         </Sidebar.ItemGroup>
       </Sidebar.Items>
