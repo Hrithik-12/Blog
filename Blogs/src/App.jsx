@@ -12,6 +12,7 @@ import CreatePost from "./pages/CreatePost"
 import UpdatePost from "./pages/Updatepost"
 import Posts from "./pages/posts"
 import ScrolltoTop from "./Components/ScrolltoTop"
+import Searchpage from "./pages/Searchpage"
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Route path='update-post/:postid' element={<UpdatePost/>} />
       </Route>
       <Route path="/post/:postId" element={<Posts/>} />
+      <Route path="/search" element={<Searchpage/>}  />
       
     </Routes>
     <Footers/>

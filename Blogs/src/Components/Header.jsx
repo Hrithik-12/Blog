@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { toggleTheme } from '../theme/darkmodeslice';
 import { GoSun } from "react-icons/go";
 import { signOutSuccess,signOutStart, signOutFailure } from '../Redux/UserSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMdInformationCircleOutline } from "react-icons/io";
 function Header() {
   const path=useLocation().pathname;
@@ -15,6 +15,8 @@ function Header() {
   const {currentUser}=useSelector((state)=>state.user);
   const[isSignOutModal,setIsSignOutModal]=useState(false)
   const navigate=useNavigate()
+  const[searchterm,setSearchterm]=useState('')
+  const location=useLocation();
 
 
 
@@ -38,6 +40,23 @@ function Header() {
     }
   }
 
+  useEffect(()=>{
+    const urlparams=new URLSearchParams(location.search)
+    const searchtermfromUrl=urlparams.get('searchTerm');
+    if(searchtermfromUrl){
+      setSearchterm(searchtermfromUrl)
+    }
+
+
+  },[location.search])
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+    const urlparams=new URLSearchParams(location.search)
+    urlparams.set('searchTerm',searchterm);
+    const searchquery=urlparams.toString();
+    navigate(`/search?${searchquery}`)
+  }
+
 
   return (
     <Navbar className='border-b-2' >
@@ -45,16 +64,16 @@ function Header() {
       <span className=' px-2 py-1 bg-cyan-400 rounded-full  border-solid border-zinc-800 text-center ' >My Blog</span>
       </Link>
 
-      <form >
-       <TextInput id='search' placeholder='Search' type='text' rightIcon={FiSearch} className='hidden lg:inline ' />
+      <form onSubmit={handleSubmit} >
+       <TextInput id='search' placeholder='Search' type='text' rightIcon={FiSearch} className='hidden lg:inline '  value={searchterm} onChange={(e)=>setSearchterm(e.target.value)} />
       </form>
 
       <Button className='w-12 h-10 lg:hidden ' color="gray" pill  ><FiSearch  /></Button>
       <Navbar.Collapse>
         <Navbar.Link active={path ==='/'} as={'div'} ><Link to='/' >Home</Link></Navbar.Link>
         <Navbar.Link active={path ==='/about'} as={'div'}><Link to='/about' >About</Link></Navbar.Link>
-        <Navbar.Link active={path ==='/contact'} as={'div'}><Link to='/contact' >Contact</Link></Navbar.Link>
-        <Navbar.Link active={path ==='/project'} as={'div'}><Link to='/project' >Project</Link></Navbar.Link>
+        
+       
 
       </Navbar.Collapse>
       {/* // for dark theme toggle feature */}
